@@ -1,0 +1,50 @@
+name = "advx24-api"
+compatibility_date = "2024-07-16"
+# compatibility_flags = [ "nodejs_compat" ]
+node_compat = true
+workers_dev = true
+
+# tail_consumers = [{service = "advx24-api-tail"}]
+browser = { binding = "ADVX_BROWSER" }
+kv_namespaces = [
+  { binding = "KV", id = "12e3afbdf9464bf6b792c9ba701adec9", preview_id = "feec552772794d22ac8022f12b7c0943" }
+]
+
+services = [
+  { binding = "IMGPROC", service = "image-processing" }
+]
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "advx24"
+preview_bucket_name = "advx24"
+
+[[queues.producers]]
+  queue = "advx24-queue"
+  binding = "QUEUE"
+
+[[queues.consumers]]
+  queue = "advx24-queue"
+  max_batch_size = 10
+  max_batch_timeout = 3
+  dead_letter_queue = "advx24-dqueue"
+
+[vars]
+SERVICE_NAME = "advx24-api"
+DATABASE_URL = "postgresql://root:8X5vF12QI3b9ATCEZ0DsWOMY7wx6eSu4@hkg1.clusters.zeabur.com:30193/zeabur"
+
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# [[r2_buckets]]
+# binding = "MY_BUCKET"
+# bucket_name = "my-bucket"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "my-database"
+# database_id = ""
+
+# [ai]
+# binding = "AI"

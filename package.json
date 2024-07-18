@@ -1,0 +1,19 @@
+{
+  "name": "my-app",
+  "scripts": {
+    "dev": "wrangler dev src/index-n.ts",
+    "deploy": "wrangler deploy --minify src/index-n.ts"
+  },
+  "dependencies": {
+    "@cloudflare/puppeteer": "^0.0.11",
+    "@microlabs/otel-cf-workers": "^1.0.0-rc.40",
+    "drizzle-orm": "^0.32.0",
+    "hono": "^4.4.13",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240712.0",
+    "drizzle-kit": "^0.23.0",
+    "wrangler": "^3.57.2"
+  }
+}
