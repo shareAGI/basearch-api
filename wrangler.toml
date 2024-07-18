@@ -25,9 +25,16 @@ preview_bucket_name = "advx24"
 
 [[queues.consumers]]
   queue = "advx24-queue"
-  max_batch_size = 10
+  max_batch_size = 20
   max_batch_timeout = 3
+  max_retries = 3
   dead_letter_queue = "advx24-dqueue"
+
+[[queues.consumers]]
+  queue = "advx24-dqueue"
+  max_batch_size = 20
+  max_batch_timeout = 3
+  max_retries = 1
 
 [vars]
 SERVICE_NAME = "advx24-api"

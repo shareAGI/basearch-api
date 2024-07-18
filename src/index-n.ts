@@ -20,10 +20,13 @@ export default {
         info.title = task.title || info.title;
         info.created_at = new Date(task.created_at);
         await services.databaseService.saveArticle(info);
+        message.ack();
         console.log(`Processed task: ${task.id}`);
       } catch (error) {
+        message.retry();
         console.error(`Error processing task ${task.id}: ${error.message}`);
       }
     }
+    await fetch('http://47.237.16.22:8000/v1/emb/process');
   }
 }

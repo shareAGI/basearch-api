@@ -1,4 +1,4 @@
-import { pgTable, serial, varchar, text, integer, timestamp, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, text, integer, timestamp, boolean, doublePrecision } from 'drizzle-orm/pg-core';
 
 export const articles = pgTable('articles', {
   id: serial('id').primaryKey(),
@@ -12,7 +12,8 @@ export const articles = pgTable('articles', {
   summary_short: text('summary_short'),
   has_vector_summary: boolean('has_vector_summary').default(false),
   created_at: timestamp('created_at'),
-  is_removed: boolean('is_removed')
+  is_removed: boolean('is_removed'),
+  aspect_ratio: doublePrecision('aspect_ratio'),
 });
 
 export type Article = typeof articles.$inferSelect;

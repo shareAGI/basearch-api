@@ -109,7 +109,7 @@ export class BrowserService {
       // and multiple newlines with a single space
       const sanitizedText = text
         .replace(/\s{2,}/g, ' ')  // Replace 2 or more spaces with a single space
-        .replace(/\n{2,}/g, ' '); // Replace 2 or more newlines with a single space
+        .replace(/\n{2,}/g, '\n'); // Replace 2 or more newlines with a single newline
       
       return sanitizedText;
     } catch (error) {
@@ -131,11 +131,17 @@ export class BrowserService {
         const sanitizedContent = content
           .replace(/\s{2,}/g, ' ')  // Replace 2 or more spaces with a single space
           .replace(/\n{2,}/g, ' '); // Replace 2 or more newlines with a single space
-
-        return {  
+        
+        // Get page dimensions
+        const width = document.documentElement.scrollWidth;
+        const height = document.documentElement.scrollHeight;
+        const aspect_ratio = height / width;
+        
+        return {
           title: document.title,
           content: sanitizedContent,
           raw_html: document.documentElement.outerHTML,
+          aspect_ratio: aspect_ratio,
         };
       });
       

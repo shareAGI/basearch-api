@@ -19,10 +19,9 @@ export class UncapturedProcessService {
 
   async process(url: string, title: string, created_at: Date): Promise<void> {
     const task = {
-      id: Date.now().toString(),
       url,
       title,
-      created_at: created_at.toISOString(),
+      created_at,
     };
 
     await this.queueProcessorService.queueTask(task);
