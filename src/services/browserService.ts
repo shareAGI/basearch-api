@@ -104,7 +104,14 @@ export class BrowserService {
       const page = await browser.newPage();
       await page.goto(url, { waitUntil: "networkidle2" });
       const text = await page.evaluate(() => document.body.innerText);
-      return text;
+      
+      // Sanitize the text: replace multiple spaces with a single space,
+      // and multiple newlines with a single space
+      const sanitizedText = text
+        .replace(/\s{2,}/g, ' ')  // Replace 2 or more spaces with a single space
+        .replace(/\n{2,}/g, ' '); // Replace 2 or more newlines with a single space
+      
+      return sanitizedText;
     } catch (error) {
       throw new Error(`Error extracting text: ${error.message}`);
     } finally {
@@ -119,9 +126,15 @@ export class BrowserService {
       await page.goto(url, { waitUntil: "networkidle2" });
       
       const info = await page.evaluate(() => {
+        const content = document.body.innerText;
+        // Sanitize the content
+        const sanitizedContent = content
+          .replace(/\s{2,}/g, ' ')  // Replace 2 or more spaces with a single space
+          .replace(/\n{2,}/g, ' '); // Replace 2 or more newlines with a single space
+
         return {  
           title: document.title,
-          content: document.body.innerText,
+          content: sanitizedContent,
           raw_html: document.documentElement.outerHTML,
         };
       });
