@@ -38,7 +38,6 @@ preview_bucket_name = "advx24"
 
 [vars]
 SERVICE_NAME = "advx24-api"
-DATABASE_URL = "postgresql://advx24:adventurex24@47.237.16.22:5432/advx24"
 
 # [[kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"

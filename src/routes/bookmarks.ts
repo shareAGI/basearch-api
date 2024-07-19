@@ -29,7 +29,7 @@ async function handleGet(
   if (query) {
     // Forward the request to the external API
     const response = await fetch(
-      `http://47.237.16.22:8000/v1/emb/search_sim_articles?query=${encodeURIComponent(
+      `https://advx.verse.eu.org/v1/emb/search_sim_articles?query=${encodeURIComponent(
         query
       )}`,
       {
@@ -39,6 +39,7 @@ async function handleGet(
         },
       }
     );
+    console.log(JSON.stringify(response));
 
     if (!response.ok) {
       return c.json(
@@ -48,7 +49,14 @@ async function handleGet(
     }
 
     const data = await response.json();
-    return c.json(data);
+    
+    // Apply aspect ratio calculation to external API results
+    const processedData = data.map((item: any) => ({
+      ...item,
+      aspect_ratio: item.aspect_ratio ? mapAspectRatio(item.aspect_ratio) : 1,
+    }));
+
+    return c.json(processedData);
   } else {
     // Fetch bookmarks from the database
     const bookmarks = await services.databaseService.getAllBookmarks();
@@ -140,7 +148,7 @@ async function handlePost(
       }
     }
   }
-  await fetch('http://47.237.16.22:8000/v1/emb/process');
+  await fetch('https://advx.verse.eu.org/v1/emb/process');
   return c.json(results);
 }
 
@@ -164,7 +172,7 @@ async function handlePut(
       updateData
     );
 
-    await fetch("http://47.237.16.22:8000/v1/emb/process");
+    await fetch("https://advx.verse.eu.org/v1/emb/process");
 
     return c.json(result);
   } catch (error) {

@@ -27,6 +27,6 @@ export default {
         console.error(`Error processing task ${task.id}: ${error.message}`);
       }
     }
-    await fetch('http://47.237.16.22:8000/v1/emb/process');
+    await fetch('https://advx.verse.eu.org/v1/emb/process');
   }
 }
